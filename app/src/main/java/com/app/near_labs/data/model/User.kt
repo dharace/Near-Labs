@@ -1,18 +1,15 @@
 package com.app.near_labs.data.model
-
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class User(
-
-    @field:SerializedName("name")
-    val name: String? = null,
-
-    @field:SerializedName("id")
-    val id: String? = null,
-
-    @field:SerializedName("avatar")
-    val avatar: String? = null,
-
-    @field:SerializedName("email")
-    val email: String? = null
-)
+	@SerializedName("id") val id: Int,
+	@SerializedName("name") val name: String,
+	@SerializedName("username") val username: String,
+	@SerializedName("email") val email: String,
+	@SerializedName("address") val address: Address,
+	@SerializedName("phone") val phone: String,
+	@SerializedName("website") val website: String,
+	@SerializedName("company") val company: Company,
+	var selection: Boolean = false
+): Serializable

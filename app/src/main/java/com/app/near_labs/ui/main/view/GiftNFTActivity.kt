@@ -1,28 +1,43 @@
 package com.app.near_labs.ui.main.view
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.Window
-import android.view.WindowManager
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.*
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.near_labs.R
 import com.app.near_labs.data.model.NFTUser
+import com.app.near_labs.data.model.User
 import com.app.near_labs.ui.main.adapter.GiftNFTAdapter
+import com.app.near_labs.ui.main.viewmodel.UserViewModel
+import com.app.near_labs.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_gift_n_f_t.*
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.dilog_allow_contacts.view.*
+import java.io.Serializable
 import javax.inject.Inject
 
 
 // Gift NFT Screen - Designed by Dhara Hirpara 20 Jan 2021 4:00 PM EST
 
+@AndroidEntryPoint
 class GiftNFTActivity : AppCompatActivity() {
+
+    private val viewModel: UserViewModel by viewModels()
 
     @Inject
     lateinit var adapter: GiftNFTAdapter
+
+    private var users: ArrayList<User> = ArrayList()
+    private var isSearch: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +53,7 @@ class GiftNFTActivity : AppCompatActivity() {
         setContentView(R.layout.activity_gift_n_f_t)
 
         setupUI()
+        setupAPICall()
     }
 
     private fun setupUI() {
@@ -46,9 +62,11 @@ class GiftNFTActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         adapter = GiftNFTAdapter()
         recyclerView.adapter = adapter
-        adapter.apply {
-            addData(getDummyUsers())
-            notifyDataSetChanged()
+
+        button_send_gift.setOnClickListener {
+            val myIntent = Intent(this, HomeActivity::class.java)
+            myIntent.putExtra("list", if(isSearch) adapter.usersFiltered else users)
+            this.startActivity(myIntent)
         }
 
         // on click import contact
@@ -59,6 +77,53 @@ class GiftNFTActivity : AppCompatActivity() {
         // cancel button click
         ic_cancel.setOnClickListener {
             onBackPressed()
+        }
+
+        // change create Near Account button color
+        ed_search.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable) {}
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                if (s.length > 0) {
+                    adapter.filter.filter(s)
+                    isSearch = true
+                } else {
+                    renderList(users)
+                    isSearch = false
+                }
+            }
+        })
+    }
+
+    private fun setupAPICall() {
+        viewModel.fetchUsers().observe(this, Observer {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    progressBar.visibility = View.GONE
+                    it.data?.let { usersData: List<User> ->
+                        renderList(usersData)
+                        users = usersData as ArrayList<User>
+                    }
+                    recyclerView.visibility = View.VISIBLE
+                }
+                Status.LOADING -> {
+                    progressBar.visibility = View.VISIBLE
+                    recyclerView.visibility = View.GONE
+                }
+                Status.ERROR -> {
+                    //Handle Error
+                    progressBar.visibility = View.GONE
+                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                }
+            }
+        })
+    }
+
+    private fun renderList(users: List<User>) {
+        adapter.apply {
+            addData(users)
+            notifyDataSetChanged()
         }
     }
 
@@ -76,6 +141,7 @@ class GiftNFTActivity : AppCompatActivity() {
         dialog.show()
 
         //set Listener
+
         dialogView.tv_allow.setOnClickListener(){
             dialog.dismiss()
             showImportGoogleContact()
@@ -88,7 +154,10 @@ class GiftNFTActivity : AppCompatActivity() {
     }
 
     private fun showImportGoogleContact() {
-        val dialogView = LayoutInflater.from(this).inflate(R.layout.dilog_import_google_contacts, null)
+        val dialogView = LayoutInflater.from(this).inflate(
+            R.layout.dilog_import_google_contacts,
+            null
+        )
         val dialogBuilder = AlertDialog.Builder(this).setView(dialogView)
 
         //show dialog

@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppThemeFullScreen">
-        <activity android:name=".ui.main.view.GiftNFTActivity"></activity>
+        <activity android:name=".ui.main.view.HomeActivity"></activity>
+        <activity android:name=".ui.main.view.GiftNFTActivity" />
         <activity android:name=".ui.main.view.CreateAccountActivity" />
         <activity android:name=".ui.main.view.VerificationActivity" />
         <activity android:name=".ui.main.view.LoginActivity">

@@ -19,7 +19,7 @@ object NetworkingModule {
 
     @Provides
     fun providesBaseUrl(): String {
-        return "https://5e510330f2c0d300147c034c.mockapi.io/"
+        return "https://jsonplaceholder.typicode.com/"
     }
 
     @Provides
