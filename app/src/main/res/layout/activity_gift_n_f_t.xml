@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:fitsSystemWindows="false"
+    android:orientation="vertical"
+    tools:context=".ui.main.view.CreateAccountActivity">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:src="@drawable/bg_login" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:background="@drawable/round_corner_top_white"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/_15sdp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:text="@string/gift_nft"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/_21ssp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ic_cancel"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_dismiss" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/search_people"
+                android:drawableLeft="@drawable/ic_search"
+                android:drawablePadding="@dimen/_7sdp"
+                android:background="@drawable/round_corner_searchbar"
+                android:paddingVertical="@dimen/_7sdp"
+                android:textSize="@dimen/_17ssp"
+                android:textColorHint="@color/grey_hint"
+                android:layout_weight="1"
+                android:paddingHorizontal="@dimen/_15sdp"
+                android:layout_marginLeft="@dimen/_15sdp"/>
+
+            <TextView
+                android:id="@+id/tv_import"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/Import"
+                android:textColor="@color/blue_button"
+                android:textSize="@dimen/_17ssp"
+                android:paddingHorizontal="@dimen/_15sdp"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:overScrollMode="never"
+            android:layout_weight="1"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/round_corner_blue_button"
+            android:drawableRight="@drawable/arrow"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:stateListAnimator="@null"
+            android:text="@string/send_gift"
+            android:textAllCaps="false"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@null"
+            android:drawableRight="@drawable/ic_share"
+            android:drawablePadding="@dimen/_10sdp"
+            android:paddingHorizontal="@dimen/_20sdp"
+            android:stateListAnimator="@null"
+            android:text="@string/share_app"
+            android:textAllCaps="false"
+            android:textColor="@color/blue_button"
+            android:textSize="@dimen/_15ssp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</RelativeLayout>

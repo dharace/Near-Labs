@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#FFCE20</color>
+    <color name="grey">#F2F2F2</color>
+    <color name="grey_border">#CFCFCF</color>
+    <color name="grey_fill">#F9F9F9</color>
+    <color name="grey_hint">#828282</color>
+    <color name="grey_808080">#808080</color>
+    <color name="grey_button">#BDBDBD</color>
+    <color name="view_color">#E3E3E3</color>
+    <color name="blue_button">#2F80ED</color>
+    <color name="searchbar">#EBEDF0</color>
+</resources>
